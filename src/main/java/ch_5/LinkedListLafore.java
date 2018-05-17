@@ -46,7 +46,7 @@ public class LinkedListLafore {
 
   // Да, это конструктор, который возвращает void (!!!)
   // ахуеть, даже и не знал.
-  public void LinkList() {
+  public LinkedListLafore() {
     first = null; // просто явно присваиваем null ссылке на первый элемент, так как элементов в списке еще нет
                   // как и в классе Link, явная инициализация  необязательна.
   }
@@ -57,7 +57,7 @@ public class LinkedListLafore {
 
   /**
    * Этот метод вставляет новый элемент в начало, потому что так проще всего. Мы просто создаем новый Link, присваиваем
-   * его полю next значение first, а самому first присваиваем newLink/
+   * его полю next значение first, а самому first присваиваем newLink.
    * */
   public void insertFirst(int id, double dd) {
     Link newLink = new Link(id, dd);
@@ -84,6 +84,87 @@ public class LinkedListLafore {
     }
   }
 
+  /**
+   * Ищем элемент
+   * */
+  public Link find(Link link) {
+    Link current = first;
+    while (!current.equals(link)) {
+      if (current.next == null) {
+        return null;
+      } else {
+        current = current.next;
+      }
+    }
+    return current;
+  }
+
+  /**
+   * Удаление элемента
+   * */
+  public Link delete(Link link) {
+    Link current = first;
+    Link previous = first;
+    while (!current.equals(link)) { //ищем элемент в нашем связном списке
+      if (current.next == null) {
+        return null;
+      } else {
+        previous = current;       // попутно сохраняем предыдущий элемент
+        current = current.next;
+      }
+    }
+
+    // если нашли элемент - то просто меняем ссылку next предыдущего элемента самого найденного на next найденного
+    if (current == first) {
+      first = first.next;
+    } else {
+      previous.next = current.next;
+    }
+    return current;
+  }
+
+  public static void main(String[] args) {
+    LinkedListLafore linkedListLafore = new LinkedListLafore();
+    linkedListLafore.insertFirst(22,2.99);
+    linkedListLafore.insertFirst(44,4.99);
+    linkedListLafore.insertFirst(66,6.99);
+    linkedListLafore.insertFirst(88,8.99);
+    linkedListLafore.insertFirst(99,8.99);
+    linkedListLafore.insertFirst(100,8.99);
+
+    linkedListLafore.displayList();
+    System.out.println("====================================");
+
+    while (!linkedListLafore.isEmpty()) {
+      Link link = linkedListLafore.deleteFirst();
+      link.displayLink();
+    }
+
+    System.out.println("====================================");
+
+    linkedListLafore.displayList();
+
+    System.out.println("====================================");
+
+    linkedListLafore.insertFirst(22,2.99);
+    linkedListLafore.insertFirst(44,4.99);
+    linkedListLafore.insertFirst(66,6.99);
+    linkedListLafore.insertFirst(88,8.99);
+    linkedListLafore.insertFirst(99,8.99);
+    linkedListLafore.insertFirst(100,8.99);
+
+    Link k = linkedListLafore.find(new Link(66, 6.99));
+    k.displayLink();
+
+    System.out.println("====================================");
+
+    linkedListLafore.delete(k);
+
+    System.out.println("====================================");
+
+    linkedListLafore.displayList();
+  }
+
 }
 
 
@@ -107,4 +188,24 @@ class Link {
     System.out.println("{" + iData + ", " + dData + "}");
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Link link = (Link) o;
+
+    if (iData != link.iData) return false;
+    return Double.compare(link.dData, dData) == 0;
+  }
+
+  @Override
+  public int hashCode() {
+    int result;
+    long temp;
+    result = iData;
+    temp = Double.doubleToLongBits(dData);
+    result = 31 * result + (int) (temp ^ (temp >>> 32));
+    return result;
+  }
 }
