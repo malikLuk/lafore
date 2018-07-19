@@ -60,6 +60,7 @@ package ch_5;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.*;
 
 class InterIterApp {
 
@@ -81,6 +82,19 @@ class InterIterApp {
     }
 
     public static void main(String[] args) throws IOException {
+        LinkedList<String> l = new LinkedList<String>();
+        l.add("dddd");
+        l.add("dsgfsd");
+        l.add("sdgh");
+        l.add("aaaaaa");
+        l.add("chuuuuuuu");
+        Iterator<String> i = l.iterator();
+
+        while (i.hasNext()) {
+            System.out.println(i.next());
+        }
+
+
         LinkList theList = new LinkList();
         ListIterator iter1 = theList.getIterator();
         long value;
