@@ -18,8 +18,10 @@
  *  - Метод обращается к своим аргументам, читая значения с вершины стека.
  *  - Непосредственно перед возвратом управления метод читает из стека адрес возврата, после чего извлекает этот адрес и
  *      аргументы из стека и уничтожает их.
- * Стр 281.
- *
+ * Ниже представлена программа, имитирующая рекурсию через стек. Я все рассмотрел и понял, но не факт, что сходу врублюсь
+ * через месяц, поэтому не лениться и скомпилировтаь в голове весь код и пройтись по шагам для цифры 4. Если что, страницы,
+ * начиная с 285. Также, на 287 странице описано, как в нашем случае избавиться от switch-case. Там по сути стек не нужен,
+ * но в более сложных алгоритмах без него не обойтись.
  *
  * */
 
@@ -55,8 +57,9 @@ public class RecAlgorithms {
     public static void rectriangle() {
         theStack = new StackX(10000);
         codePart = 1;
-        while( step() == false) // Вызывать, пока step() не вернет true
+        while( step() == false) { // Вызывать, пока step() не вернет true
             ; // Пустое тело цикла
+        }
     }
 
     public static boolean step()
@@ -113,7 +116,7 @@ public class RecAlgorithms {
 
 }
 
-class Params {
+class Params { // Параметры, сохраняемые в стеке
     public int n;
     public int returnAddress;
 
@@ -127,7 +130,7 @@ class StackX {
 
     private int maxSize;
     private Params[] stackArray;
-    private int top;
+    private int top;    // вершина стека
 
     public StackX(int maxSize) {
         this.maxSize = maxSize;
