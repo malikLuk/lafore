@@ -1,6 +1,5 @@
 /**
- *
- *                                              Интересные применения рекурсии.
+ * Интересные применения рекурсии.
  * Возведение числа в степень.
  * Нам надо возвести X в степень Y. Одно из возможных решений основано на группировке множителей. Рассмотрим 2^8. В
  * конечно итоге, 2 необходимо умножить на себя 8 раз. Начнем с 2 * 2 = 4. Две двойки перемножены и остается еще шесть.
@@ -9,7 +8,7 @@
  * 2*2*2*2*2*2*2*2. Сложность с O(N) сократилась на O(logN). Такая схема основана на математической формуле:
  * x^y = (x^2)^(y/2) - икс в квадрате в степени игрик-пополам. Напистаь это самому. Данный алгоритм подходит только для
  * четных степеней. Допилить для нечетных. Допилил, заодно посмотреть стр 290.
- *
+ * <p>
  * Задача о рюкзаке.
  * Классическая задача программирования. В простейшей форме звучит так: нужно заполнить рюкзак предметами различного веса
  * из доступных, для достижения заданного веса. Укладывать все предметы не обязательно. Допустим, собранный рюкзак должен
@@ -23,8 +22,7 @@
  * 4. Если ни одна из комбинаций не сработала - отложить первый предмет и повторить весь процесс для второго.
  * 5.Проверить таким образом и для остальных. Если ничего не подходит - задача решения не имеет.
  * Написать рекурсивный метод.
- *
- * */
+ */
 
 package ch_6;
 
@@ -34,26 +32,29 @@ package ch_6;
 public class RecApplications {
 
     public static void main(String[] args) {
-        System.out.println(power(3,18));
+        System.out.println(power(2, 11));
     }
 
+    /**
+     * При слишком глубоком рекурсивном вызове появляется StackOverflowError
+     * */
     static int power(int digit, int pow) {
         if (pow == 1) {
             return digit;
         } else {
             if (pow % 2 != 0) {
-                return digit * power(digit*digit, pow/2);
+                return digit * power(digit * digit, pow / 2);
             }
-            return power(digit*digit, pow/2);
+            return power(digit * digit, pow / 2);
         }
     }
 
-    static Object bagPackaging(int[] arr, int index, int targetWeight) {
+    /*static Object bagPackaging(int[] arr, int index, int targetWeight) {
         if (arr[index] < targetWeight) {
             int newTargetWeight = targetWeight - arr[index];
             int newIndex = index + 1;
             return bagPackaging(arr, newIndex, newTargetWeight);
         }
-    }
+    }*/
 
 }
