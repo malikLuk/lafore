@@ -8,7 +8,7 @@
  *
  * */
 
-package ch8;
+package ch_8;
 
 public class InsertNode {
 }
