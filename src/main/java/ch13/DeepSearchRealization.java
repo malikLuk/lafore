@@ -19,6 +19,31 @@ import java.util.Stack;
 public class DeepSearchRealization {
 
     public static void main(String[] args) {
+        /**
+         * Это граф (а) с рисунка gr_12
+         * После  работы метода mst() он превратится в граф (б)
+         * */
+        GraphExample mstGraphExample = new GraphExample();
+        mstGraphExample.addVertex('A'); // 0 (исходная вершина)
+        mstGraphExample.addVertex('B'); // 1
+        mstGraphExample.addVertex('C'); // 2
+        mstGraphExample.addVertex('D'); // 3
+        mstGraphExample.addVertex('E'); // 4
+        mstGraphExample.addEdge(0, 1); // AB
+        mstGraphExample.addEdge(0, 2); // AC
+        mstGraphExample.addEdge(0, 3); // AD
+        mstGraphExample.addEdge(0, 4); // AE
+        mstGraphExample.addEdge(1, 2); // BC
+        mstGraphExample.addEdge(1, 3); // BD
+        mstGraphExample.addEdge(1, 4); // BE
+        mstGraphExample.addEdge(2, 3); // CD
+        mstGraphExample.addEdge(2, 4); // CE
+        mstGraphExample.addEdge(3, 4); // DE
+        System.out.print("Minimum spanning tree: \n");
+        mstGraphExample.mst(); // Минимальное остовное дерево
+        System.out.println();
+
+
         GraphExample theGraph = new GraphExample();
         /**
          * Получится граф gr_10.png
@@ -91,7 +116,7 @@ class GraphExample {
     }
 
     public void displayVertex(int vertex) {
-        System.out.println(vertexList[vertex].label);
+        System.out.print(vertexList[vertex].label);
     }
 
     /**
@@ -154,6 +179,32 @@ class GraphExample {
         }
 
         // Сброс флагов посещения
+        for (int i = 0; i < nVerts; i++) {
+            vertexList[i].wasVisited = false;
+        }
+    }
+
+    /**
+     * Метод для построения минимального
+     * остовного дерева. Начинаем с вершины 0
+     */
+    public void mst() {
+        vertexList[0].wasVisited = true; // пометили
+        theStack.push(0); // занесли в стек
+        while (!theStack.isEmpty()) {
+            int currentVertex = theStack.peek(); // смотрим, что в стеке
+            int v = getAdjUnvisitedVertex(currentVertex); // ищем соседа для вершины в стеке
+
+            if (v ==  -1) {
+                theStack.pop(); // если соседа нет, то достаем вершину из стека
+            } else {
+                vertexList[v].wasVisited = true; // если есть - то помечаем соседнюю вершину, как посещенную
+                theStack.push(v); // и заносим в стек
+                displayVertex(currentVertex); // выводим две вершины, как обозначение ребра
+                displayVertex(v);
+                System.out.println(" ");
+            }
+        }
         for (int i = 0; i < nVerts; i++) {
             vertexList[i].wasVisited = false;
         }
